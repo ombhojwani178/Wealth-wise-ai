@@ -425,7 +425,7 @@
                             </svg>
                             Back
                         </button>
-                        <button onclick="submitAssessment()" class="btn-primary" id="step-3-next">
+                        <button onclick="nextStep()" class="btn-primary" id="step-3-next">
                             Generate Portfolio
                             <svg class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -436,30 +436,245 @@
             </div>
 
             <div id="step-4" class="assessment-step hidden">
-                <div class="space-y-8" id="analysis-results">
-                    <div class="text-center" id="loading-spinner">
-                         <div class="inline-flex items-center space-x-2 bg-blue-50 px-4 py-2 rounded-full border border-blue-200 mb-4">
-                            <svg class="h-5 w-5 text-blue-600 animate-spin" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <div class="space-y-8">
+                    <div class="text-center">
+                        <div class="inline-flex items-center space-x-2 bg-success-50 px-4 py-2 rounded-full border border-success-200 mb-4">
+                            <svg class="h-5 w-5 text-success animate-spin" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                             </svg>
-                            <span class="text-blue-600 font-medium text-sm">AI is Analyzing Your Profile...</span>
+                            <span class="text-success font-medium text-sm">AI Analysis Complete</span>
                         </div>
-                        <h2 class="text-3xl font-bold mb-4">Generating Your Personalized Investment Portfolio</h2>
-                        <p class="text-text-secondary max-w-2xl mx-auto">Please wait a moment while our AI creates a customized portfolio for you.</p>
+                        <h2 class="text-3xl font-bold mb-4">Your Personalized Investment Portfolio</h2>
+                        <p class="text-text-secondary max-w-2xl mx-auto">Based on your profile, our AI has created a customized portfolio designed to meet your goals while matching your risk tolerance.</p>
                     </div>
-                    <div id="results-content" class="hidden">
-                         </div>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-                    <button onclick="prevStep()" class="btn-secondary">
-                        <svg class="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                        Modify Assessment
-                    </button>
-                    <a href="user_dashboard.html" class="btn-primary text-center">
-                        Accept & Continue
-                        <svg class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </a>
+
+                    <div class="grid lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2">
+                            <div class="card">
+                                <h3 class="text-xl font-semibold mb-6">Recommended Asset Allocation</h3>
+                                
+                                <div class="relative mb-6">
+                                    <div class="w-64 h-64 mx-auto relative">
+                                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                            <circle cx="50" cy="50" r="40" fill="none" stroke="#1B365D" stroke-width="20" stroke-dasharray="40 60" stroke-dashoffset="0" class="transition-all duration-500"/>
+                                            <circle cx="50" cy="50" r="40" fill="none" stroke="#00B4A6" stroke-width="20" stroke-dasharray="30 70" stroke-dashoffset="-40" class="transition-all duration-500"/>
+                                            <circle cx="50" cy="50" r="40" fill="none" stroke="#2E5984" stroke-width="20" stroke-dasharray="20 80" stroke-dashoffset="-70" class="transition-all duration-500"/>
+                                            <circle cx="50" cy="50" r="40" fill="none" stroke="#38A169" stroke-width="20" stroke-dasharray="10 90" stroke-dashoffset="-90" class="transition-all duration-500"/>
+                                        </svg>
+                                        <div class="absolute inset-0 flex items-center justify-center">
+                                            <div class="text-center">
+                                                <div class="text-2xl font-bold text-primary">$500</div>
+                                                <div class="text-sm text-text-secondary">Monthly</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-4 h-4 bg-primary rounded"></div>
+                                        <div>
+                                            <div class="font-semibold">Stocks (40%)</div>
+                                            <div class="text-sm text-text-secondary">$200/month</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-4 h-4 bg-accent rounded"></div>
+                                        <div>
+                                            <div class="font-semibold">Bonds (30%)</div>
+                                            <div class="text-sm text-text-secondary">$150/month</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-4 h-4 bg-secondary rounded"></div>
+                                        <div>
+                                            <div class="font-semibold">REITs (20%)</div>
+                                            <div class="text-sm text-text-secondary">$100/month</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-4 h-4 bg-success rounded"></div>
+                                        <div>
+                                            <div class="font-semibold">Cash (10%)</div>
+                                            <div class="text-sm text-text-secondary">$50/month</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-6 p-4 bg-surface rounded-lg">
+                                    <h4 class="font-semibold mb-3">Adjust Your Allocation</h4>
+                                    <p class="text-sm text-text-secondary mb-4">Drag the sliders to customize your portfolio allocation</p>
+                                    
+                                    <div class="space-y-4">
+                                        <div class="allocation-slider">
+                                            <div class="flex justify-between items-center mb-2">
+                                                <span class="text-sm font-medium">Stocks</span>
+                                                <span class="text-sm text-primary font-semibold" id="stocks-percent">40%</span>
+                                            </div>
+                                            <input type="range" min="0" max="100" value="40" class="w-full allocation-range" id="stocks-slider" />
+                                        </div>
+                                        
+                                        <div class="allocation-slider">
+                                            <div class="flex justify-between items-center mb-2">
+                                                <span class="text-sm font-medium">Bonds</span>
+                                                <span class="text-sm text-accent font-semibold" id="bonds-percent">30%</span>
+                                            </div>
+                                            <input type="range" min="0" max="100" value="30" class="w-full allocation-range" id="bonds-slider" />
+                                        </div>
+                                        
+                                        <div class="allocation-slider">
+                                            <div class="flex justify-between items-center mb-2">
+                                                <span class="text-sm font-medium">REITs</span>
+                                                <span class="text-sm text-secondary font-semibold" id="reits-percent">20%</span>
+                                            </div>
+                                            <input type="range" min="0" max="100" value="20" class="w-full allocation-range" id="reits-slider" />
+                                        </div>
+                                        
+                                        <div class="allocation-slider">
+                                            <div class="flex justify-between items-center mb-2">
+                                                <span class="text-sm font-medium">Cash</span>
+                                                <span class="text-sm text-success font-semibold" id="cash-percent">10%</span>
+                                            </div>
+                                            <input type="range" min="0" max="100" value="10" class="w-full allocation-range" id="cash-slider" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="card">
+                                <h3 class="font-semibold mb-4">Portfolio Risk Score</h3>
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-primary mb-2">6.2</div>
+                                    <div class="text-sm text-text-secondary mb-4">Moderate Risk</div>
+                                    <div class="w-full bg-border rounded-full h-2">
+                                        <div class="bg-gradient-to-r from-success to-warning h-2 rounded-full" style="width: 62%"></div>
+                                    </div>
+                                    <div class="flex justify-between text-xs text-text-secondary mt-2">
+                                        <span>Low</span>
+                                        <span>High</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <h3 class="font-semibold mb-4">Projected Returns</h3>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-text-secondary">1 Year</span>
+                                        <span class="font-semibold text-success">+8.2%</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-text-secondary">5 Years</span>
+                                        <span class="font-semibold text-success">+9.7%</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-text-secondary">10 Years</span>
+                                        <span class="font-semibold text-success">+10.4%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card bg-gradient-to-br from-primary-50 to-accent-50 border-primary-200">
+                                <div class="flex items-center space-x-2 mb-3">
+                                    <svg class="h-5 w-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <h3 class="font-semibold text-primary">AI Recommendation</h3>
+                                </div>
+                                <p class="text-sm text-text-secondary">Based on your moderate risk tolerance and long-term goals, this balanced portfolio offers steady growth potential while maintaining stability during market volatility.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="text-xl font-semibold mb-6">Recommended Investments</h3>
+                        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="investment-card p-4 border border-border rounded-lg hover:border-primary-300 transition-colors">
+                                <div class="flex items-center space-x-3 mb-3">
+                                    <div class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center">
+                                        <span class="text-primary font-bold text-sm">VTI</span>
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold text-sm">Vanguard Total Stock</div>
+                                        <div class="text-xs text-text-secondary">Stock ETF</div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-text-secondary">Allocation</span>
+                                    <span class="font-semibold text-primary">25%</span>
+                                </div>
+                            </div>
+
+                            <div class="investment-card p-4 border border-border rounded-lg hover:border-primary-300 transition-colors">
+                                <div class="flex items-center space-x-3 mb-3">
+                                    <div class="w-10 h-10 bg-accent-100 rounded-full flex items-center justify-center">
+                                        <span class="text-accent font-bold text-sm">BND</span>
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold text-sm">Vanguard Total Bond</div>
+                                        <div class="text-xs text-text-secondary">Bond ETF</div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-text-secondary">Allocation</span>
+                                    <span class="font-semibold text-accent">30%</span>
+                                </div>
+                            </div>
+
+                            <div class="investment-card p-4 border border-border rounded-lg hover:border-primary-300 transition-colors">
+                                <div class="flex items-center space-x-3 mb-3">
+                                    <div class="w-10 h-10 bg-secondary-100 rounded-full flex items-center justify-center">
+                                        <span class="text-secondary font-bold text-sm">VNQ</span>
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold text-sm">Vanguard REIT</div>
+                                        <div class="text-xs text-text-secondary">Real Estate ETF</div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-text-secondary">Allocation</span>
+                                    <span class="font-semibold text-secondary">20%</span>
+                                </div>
+                            </div>
+
+                            <div class="investment-card p-4 border border-border rounded-lg hover:border-primary-300 transition-colors">
+                                <div class="flex items-center space-x-3 mb-3">
+                                    <div class="w-10 h-10 bg-success-100 rounded-full flex items-center justify-center">
+                                        <span class="text-success font-bold text-sm">VMOT</span>
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold text-sm">Vanguard Ultra-Short</div>
+                                        <div class="text-xs text-text-secondary">Money Market</div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-text-secondary">Allocation</span>
+                                    <span class="font-semibold text-success">10%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="prevStep()" class="btn-secondary">
+                            <svg class="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                            Modify Assessment
+                        </button>
+                        <a href="user_dashboard.html" class="btn-primary text-center">
+                            Accept Portfolio & Continue
+                            <svg class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                        <a href="financial_planning_center.html" class="btn-accent text-center">
+                            Explore Planning Tools
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -638,6 +853,7 @@
                 updateStepIndicators();
                 updateProgress();
                 
+                // Scroll to top of section
                 document.querySelector('.assessment-step.active').scrollIntoView({ behavior: 'smooth' });
             }
         }
@@ -655,6 +871,7 @@
                 updateStepIndicators();
                 updateProgress();
                 
+                // Scroll to top of section
                 document.querySelector('.assessment-step.active').scrollIntoView({ behavior: 'smooth' });
             }
         }
@@ -682,7 +899,7 @@
         }
 
         function updateProgress() {
-            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            const progress = (currentStep / totalSteps) * 100;
             document.getElementById('progress-bar').style.width = `${progress}%`;
             document.getElementById('progress-text').textContent = `${Math.round(progress)}% Complete`;
         }
@@ -697,6 +914,12 @@
 
             const isValid = ageRange && annualIncome && currentSavings && investmentExperience && monthlyBudget;
             document.getElementById('step-1-next').disabled = !isValid;
+            
+            if (isValid) {
+                document.getElementById('step-1-next').classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                document.getElementById('step-1-next').classList.add('opacity-50', 'cursor-not-allowed');
+            }
         }
 
         // Form validation for Step 2
@@ -706,6 +929,12 @@
             
             const isValid = timeline && hasGoals;
             document.getElementById('step-2-next').disabled = !isValid;
+            
+            if (isValid) {
+                document.getElementById('step-2-next').classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                document.getElementById('step-2-next').classList.add('opacity-50', 'cursor-not-allowed');
+            }
         }
 
         // Goal selection handling
@@ -733,6 +962,7 @@
         // Risk slider handling
         const riskSlider = document.getElementById('risk-slider');
         const riskDescription = document.getElementById('risk-description');
+        
         const riskDescriptions = {
             1: '<strong>Conservative:</strong> Focus on capital preservation with minimal risk. Expect lower but stable returns.',
             2: '<strong>Moderate Conservative:</strong> Slight emphasis on growth with low risk tolerance. Balanced approach favoring stability.',
@@ -740,9 +970,38 @@
             4: '<strong>Moderate Aggressive:</strong> Growth-focused with higher risk tolerance. Potential for higher returns with increased volatility.',
             5: '<strong>Aggressive:</strong> Maximum growth potential with high risk tolerance. Expect significant volatility but highest return potential.'
         };
+
         riskSlider.addEventListener('input', function() {
-            riskDescription.innerHTML = riskDescriptions[this.value];
+            const value = this.value;
+            riskDescription.innerHTML = riskDescriptions[value];
+            
+            // Update risk visualization bars
+            const bars = document.querySelectorAll('.risk-bar');
+            bars.forEach((bar, index) => {
+                const height = Math.max(20, (value * 20) + (Math.random() * 30));
+                bar.style.height = `${height}%`;
+            });
         });
+
+        // Allocation sliders handling
+        const allocationSliders = document.querySelectorAll('.allocation-range');
+        
+        allocationSliders.forEach(slider => {
+            slider.addEventListener('input', function() {
+                const id = this.id;
+                const value = this.value;
+                const percentElement = document.getElementById(id.replace('-slider', '-percent'));
+                percentElement.textContent = `${value}%`;
+                
+                // Update pie chart (simplified representation)
+                updateAllocationChart();
+            });
+        });
+
+        function updateAllocationChart() {
+            // This would update the SVG pie chart in a real implementation
+            console.log('Updating allocation chart...');
+        }
 
         // Event listeners for form validation
         document.getElementById('age-range').addEventListener('change', validateStep1);
@@ -757,89 +1016,41 @@
         updateProgress();
         validateStep1();
 
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuButton = event.target.closest('button');
+            
+            if (!menuButton && !mobileMenu.contains(event.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add loading animation to CTA buttons
+        document.querySelectorAll('.btn-primary, .btn-secondary, .btn-accent').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (this.href && !this.href.includes('#') && !this.onclick) {
+                    this.style.opacity = '0.8';
+                    const originalText = this.innerHTML;
+                    this.innerHTML = originalText + ' <span class="inline-block animate-spin ml-2">⟳</span>';
+                }
+            });
+        });
     </script>
 <script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
-
-<script>
-    // --- New Script for API Interaction ---
-
-    const backendUrl = 'https://your-backend-url.onrender.com'; // IMPORTANT: Replace with your deployed backend URL
-
-    async function submitAssessment() {
-        // Go to the results step and show loading
-        nextStep();
-        document.getElementById('loading-spinner').style.display = 'block';
-        document.getElementById('results-content').style.display = 'none';
-
-        // Collect data from the form
-        const userProfile = {
-            age: parseInt(document.getElementById('age-range').value.split('-')[0]), // Taking the lower bound of the age
-            income: 75000, // Example value, you can map this from the dropdown
-            goals: selectedGoals.join(', '),
-            current_investments: "Tech Stocks, S&P 500 ETF" // Example value
-        };
-
-        try {
-            const response = await fetch(`${backendUrl}/api/analyze`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userProfile),
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            displayResults(data.insight);
-
-        } catch (error) {
-            console.error('Error fetching analysis:', error);
-            displayError();
-        }
-    }
-
-    function displayResults(insight) {
-        const resultsContainer = document.getElementById('results-content');
-        resultsContainer.innerHTML = `
-            <div class="text-center">
-                <h2 class="text-3xl font-bold mb-4">Your Personalized Investment Portfolio</h2>
-            </div>
-            <div class="card mt-8">
-                <h3 class="text-xl font-semibold mb-4">AI Summary</h3>
-                <p class="text-text-secondary">${insight.summary}</p>
-            </div>
-            <div class="card mt-6">
-                <h3 class="text-xl font-semibold mb-4">Key Opportunity</h3>
-                <p class="text-text-secondary">${insight.opportunity}</p>
-            </div>
-            <div class="card mt-6">
-                <h3 class="text-xl font-semibold mb-4">Risk Assessment</h3>
-                <p class="text-text-secondary">${insight.risk_assessment}</p>
-            </div>
-            <div class="card mt-6 bg-primary-50">
-                <h3 class="text-xl font-semibold mb-4 text-primary">Suggested Action</h3>
-                <p class="text-text-primary font-medium">${insight.suggested_action}</p>
-            </div>
-        `;
-        document.getElementById('loading-spinner').style.display = 'none';
-        resultsContainer.style.display = 'block';
-    }
-
-    function displayError() {
-        const resultsContainer = document.getElementById('results-content');
-        resultsContainer.innerHTML = `
-            <div class="text-center text-red-600">
-                <h2 class="text-2xl font-bold mb-4">Analysis Failed</h2>
-                <p>Sorry, we couldn't retrieve your investment analysis. Please try again later.</p>
-            </div>
-        `;
-        document.getElementById('loading-spinner').style.display = 'none';
-        resultsContainer.style.display = 'block';
-    }
-</script>
-
 </body>
 </html>
