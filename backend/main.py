@@ -1,9 +1,6 @@
 # 1. Standard library imports
 import os
 import time
-import psycopg2
-from psycopg2.extras import RealDictCursor
-import json
 
 # 2. Third-party imports
 from fastapi import FastAPI
@@ -12,46 +9,19 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 
 # 3. Load environment variables from your .env file
+# This should be one of the first things your application does.
 load_dotenv()
 
-# --- Database Setup ---
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-def get_db_connection():
-    conn = psycopg2.connect(DATABASE_URL)
-    return conn
-
-# Create table if it doesn't exist
-def create_table():
-    conn = get_db_connection()
-    cur = conn.cursor()
-    cur.execute("""
-        CREATE TABLE IF NOT EXISTS user_profiles (
-            id SERIAL PRIMARY KEY,
-            age INTEGER,
-            income INTEGER,
-            goals TEXT,
-            current_investments TEXT,
-            ai_summary TEXT,
-            ai_opportunity TEXT,
-            ai_risk_assessment TEXT,
-            ai_suggested_action TEXT,
-            created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-        );
-    """)
-    conn.commit()
-    cur.close()
-    conn.close()
-
-create_table()
-
 # 4. Create the FastAPI app instance
+# The variable MUST be named 'app' for the start command 'main:app' to work.
 app = FastAPI()
 
 # 5. Configure CORS Middleware
+# This allows your frontend to make requests to this backend.
 origins = [
     "http://localhost:3000",
-    "https://your-vercel-frontend-url.vercel.app" # Add your Vercel URL here
+    # TODO: Add your Vercel frontend URL here once it's deployed.
+    # e.g., "https://your-project-name.vercel.app"
 ]
 
 app.add_middleware(
@@ -79,42 +49,26 @@ def read_root():
 @app.post("/api/analyze")
 def analyze_profile(profile: UserProfile):
     """
-    Receives user profile, gets a mock insight, and saves it to the database.
+    This is the main endpoint that receives the user profile, simulates
+    AI analysis, and returns a structured insight.
     """
     print(f"Received profile for analysis: {profile.dict()}")
 
-    time.sleep(2) # Simulate AI processing time
+    # --- This is where your real application logic will go ---
+    # TODO: 1. Connect to your database using os.getenv("DATABASE_URL")
+    # TODO: 2. Fetch real-time data from a News API using os.getenv("NEWS_API_KEY")
+    # TODO: 3. Construct a detailed prompt for your AI model
+    # TODO: 4. Call the Generative AI API using os.getenv("GEMINI_API_KEY")
+    # TODO: 5. Save the AI's response to your database
+
+    # For now, we simulate a delay and return a structured mock response
+    time.sleep(2)
 
     mock_insight = {
-        "summary": f"Based on your profile as a {profile.age}-year-old with a goal of '{profile.goals}', we've identified several opportunities.",
-        "opportunity": "The renewable energy sector is showing strong growth potential. An ETF focused on this sector could be a good addition to your portfolio.",
-        "risk_assessment": "Your current investments are heavily weighted in the tech sector. To mitigate risk, we recommend diversifying into healthcare and consumer staples.",
-        "suggested_action": "Consider allocating 10-15% of your monthly investment budget to a renewable energy ETF. Also, review your tech holdings."
+        "summary": f"Analysis for a {profile.age}-year-old with a goal of '{profile.goals}'",
+        "opportunity": "Given recent positive sentiment in the renewable energy sector, a thematic mutual fund could align with your long-term growth objectives.",
+        "risk_assessment": "Your portfolio shows a high concentration in technology stocks. We recommend diversifying into other sectors like FMCG or healthcare to mitigate sector-specific risks.",
+        "suggested_action": "Research the top 3 renewable energy funds in India. Compare their expense ratios and past 5-year performance."
     }
 
-    # --- Save the profile and analysis to the database ---
-    conn = get_db_connection()
-    cur = conn.cursor()
-    cur.execute(
-        """
-        INSERT INTO user_profiles (age, income, goals, current_investments, ai_summary, ai_opportunity, ai_risk_assessment, ai_suggested_action)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-        """,
-        (profile.age, profile.income, profile.goals, profile.current_investments, mock_insight['summary'], mock_insight['opportunity'], mock_insight['risk_assessment'], mock_insight['suggested_action'])
-    )
-    conn.commit()
-    cur.close()
-    conn.close()
-
     return {"status": "success", "insight": mock_insight}
-
-@app.get("/api/profiles")
-def get_profiles():
-    """ An endpoint to retrieve all profiles from the database. """
-    conn = get_db_connection()
-    cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT * FROM user_profiles ORDER BY created_at DESC")
-    profiles = cur.fetchall()
-    cur.close()
-    conn.close()
-    return profiles
